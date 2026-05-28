@@ -1,0 +1,19 @@
+{
+  "name": "ai-coach-app",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "mobile": "npm run start --workspace=@ai-coach/mobile",
+    "mobile:android": "npm run android --workspace=@ai-coach/mobile",
+    "mobile:web": "npm run web --workspace=@ai-coach/mobile",
+    "backend": "npm run dev --workspace=@ai-coach/backend",
+    "backend:build": "npm run build --workspace=@ai-coach/backend"
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  }
+}
