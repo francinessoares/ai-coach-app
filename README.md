@@ -10,7 +10,7 @@ Mobile app powered by AI that helps developers:
 
 - React Native (Expo)
 - Node.js backend
-- OpenAI integration
+- Google Gemini integration
 - Shared design system
 
 ## Monorepo structure
@@ -58,7 +58,7 @@ npm install
 
 ### Environment
 
-Copy `apps/backend/.env.example` to `apps/backend/.env` and set `OPENAI_API_KEY`.
+Copy `apps/backend/.env.example` to `apps/backend/.env` and set `GEMINI_API_KEY`.
 
 ## API endpoints
 

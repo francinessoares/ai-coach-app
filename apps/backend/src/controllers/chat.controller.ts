@@ -3,15 +3,11 @@ import type { Request, Response } from 'express';
 import type { CoachChatRequest, CoachChatResponse } from '@shared/types/coach';
 import { createId } from '@shared/utils/id';
 
-import { createCoachCompletion } from '../services/openai.service';
-
-const model = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
+import { createCoachCompletion } from '../services/gemini.service';
 
 export async function postChat(req: Request, res: Response): Promise<void> {
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  if (!apiKey) {
-    res.status(500).json({ error: 'OPENAI_API_KEY is not configured' });
+  if (!process.env.GEMINI_API_KEY) {
+    res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
     return;
   }
 
@@ -23,7 +19,7 @@ export async function postChat(req: Request, res: Response): Promise<void> {
   }
 
   try {
-    const content = await createCoachCompletion({ apiKey, model, body });
+    const content = await createCoachCompletion(body);
 
     const response: CoachChatResponse = {
       message: {
@@ -37,6 +33,7 @@ export async function postChat(req: Request, res: Response): Promise<void> {
     res.json(response);
   } catch (error) {
     console.error('[chat]', error);
-    res.status(500).json({ error: 'Failed to generate coach response' });
+    const message = error instanceof Error ? error.message : 'Failed to generate coach response';
+    res.status(500).json({ error: 'Failed to generate coach response', detail: message });
   }
 }
