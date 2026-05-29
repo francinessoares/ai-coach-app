@@ -1,16 +1,15 @@
-import type { CoachChatRequest } from '@shared/types/coach';
-
 import { getGeminiModel } from '../lib/gemini';
 import { COACH_SYSTEM_PROMPT } from '../prompts/coach.system';
+import type { CoachChatRequestInput } from '../schemas/chat.schema';
 
-function toGeminiHistory(messages: CoachChatRequest['messages']) {
-  return messages.slice(0, -1).map((message) => ({
+function toGeminiHistory(messages: CoachChatRequestInput['messages']) {
+  return messages.slice(0, -1).map((message: CoachChatRequestInput['messages'][number]) => ({
     role: message.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: message.content }],
   })) as { role: 'user' | 'model'; parts: { text: string }[] }[];
 }
 
-export async function createCoachCompletion(body: CoachChatRequest): Promise<string> {
+export async function createCoachCompletion(body: CoachChatRequestInput): Promise<string> {
   const model = getGeminiModel(COACH_SYSTEM_PROMPT);
   const lastMessage = body.messages[body.messages.length - 1];
 

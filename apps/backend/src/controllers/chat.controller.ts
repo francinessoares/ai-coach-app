@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express';
 
-import type { CoachChatRequest, CoachChatResponse } from '@shared/types/coach';
+import type { CoachChatResponse } from '@shared/types/coach';
 import { createId } from '@shared/utils/id';
 
+import { coachChatRequestSchema } from '../schemas/chat.schema';
 import { createCoachCompletion } from '../services/gemini.service';
 
 export async function postChat(req: Request, res: Response): Promise<void> {
@@ -11,15 +12,18 @@ export async function postChat(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const body = req.body as CoachChatRequest;
+  const parsed = coachChatRequestSchema.safeParse(req.body);
 
-  if (!body?.messages?.length) {
-    res.status(400).json({ error: 'messages is required' });
+  if (!parsed.success) {
+    res.status(400).json({
+      error: 'Invalid request body',
+      details: parsed.error.flatten().fieldErrors,
+    });
     return;
   }
 
   try {
-    const content = await createCoachCompletion(body);
+    const content = await createCoachCompletion(parsed.data);
 
     const response: CoachChatResponse = {
       message: {

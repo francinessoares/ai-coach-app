@@ -8,7 +8,7 @@ Mobile app powered by AI that helps developers:
 
 ## Architecture
 
-- React Native (Expo)
+- React Native (Expo SDK 54)
 - Node.js backend
 - Google Gemini integration
 - Shared design system
@@ -19,7 +19,7 @@ Mobile app powered by AI that helps developers:
 ai-coach-app/
 ├── apps/
 │   ├── mobile/              # React Native (Expo)
-│   └── backend/             # Node.js + OpenAI API
+│   └── backend/             # Node.js + Google Gemini API
 ├── packages/
 │   ├── shared/              # Shared types & utils
 │   └── design-system/       # Tokens & base UI components
@@ -42,7 +42,17 @@ import { Button } from '@ds/components/Button';
 
 ## Getting started
 
-**Requirements:** Node.js >= 20.19.4, npm 10+
+**Requirements:** Node.js **22** (ver `.nvmrc` / `.node-version`), npm 10+
+
+O repositório inclui `.nvmrc` com `22`. Com [nvm](https://github.com/nvm-sh/nvm) ou [nvm-windows](https://github.com/coreybutler/nvm-windows):
+
+```bash
+nvm install
+nvm use
+node -v
+```
+
+Com [fnm](https://github.com/Schniz/fnm): `fnm use`.
 
 ```bash
 npm install
@@ -62,8 +72,10 @@ Copy `apps/backend/.env.example` to `apps/backend/.env` and set `GEMINI_API_KEY`
 
 ## API endpoints
 
-- `GET /health` — service health check
-- `POST /api/chat` — AI coach conversation
+- `GET /health` — health check
+- `POST /api/chat` — conversa com o coach (body validado com Zod)
+- `POST /api/interview/evaluate` — avaliação de resposta de entrevista
+- `POST /ai-test` — teste rápido do Gemini (dev)
 
 ## Learn more
 

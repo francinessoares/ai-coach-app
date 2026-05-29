@@ -1,6 +1,7 @@
 import { View, type ViewProps, StyleSheet } from 'react-native';
 
 import { colors } from '../tokens/colors';
+import { radius } from '../tokens/radius';
 import { spacing } from '../tokens/spacing';
 
 type CardProps = ViewProps & {
@@ -17,10 +18,10 @@ export function Card({ padded = true, style, children, ...props }: CardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceGlass,
     borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 16,
+    borderColor: colors.borderSubtle,
+    borderRadius: radius.lg,
   },
   padded: {
     padding: spacing.md,

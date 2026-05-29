@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import { colors } from '../tokens/colors';
+import { radius } from '../tokens/radius';
 import { spacing } from '../tokens/spacing';
 import { typography } from '../tokens/typography';
 
@@ -23,7 +24,7 @@ const variantStyles = StyleSheet.create({
     minHeight: 48,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
-    borderRadius: 12,
+    borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },

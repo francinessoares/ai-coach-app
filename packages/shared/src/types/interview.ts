@@ -7,3 +7,8 @@ export type InterviewResult = {
   feedback: string;
   improvements: string[];
 };
+
+export type InterviewEvaluateRequest = {
+  question: string;
+  answer: string;
+};

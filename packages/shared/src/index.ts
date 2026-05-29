@@ -7,6 +7,6 @@ export type {
 
 export type { StudyPlan } from './types/study-plan';
 
-export type { InterviewResult } from './types/interview';
+export type { InterviewEvaluateRequest, InterviewResult } from './types/interview';
 
 export { createId } from './utils/id';
