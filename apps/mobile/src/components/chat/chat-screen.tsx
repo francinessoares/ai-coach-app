@@ -19,14 +19,24 @@ type ChatScreenProps = {
   subtitle: string;
   placeholder: string;
   initialPrompt?: string;
+  studyTopic?: string;
   showBack?: boolean;
 };
+
+function withStudyTopicContext(content: string, studyTopic: string | undefined, isFirstMessage: boolean) {
+  if (!studyTopic || !isFirstMessage) {
+    return content;
+  }
+
+  return `[Tema de estudo: ${studyTopic}]\n\n${content}`;
+}
 
 export function ChatScreen({
   title,
   subtitle,
   placeholder,
   initialPrompt,
+  studyTopic,
   showBack = true,
 }: ChatScreenProps) {
   const [input, setInput] = useState(initialPrompt ?? '');
@@ -37,6 +47,7 @@ export function ChatScreen({
     const content = input.trim();
     if (!content || isPending) return;
 
+    const isFirstMessage = messages.length === 0;
     const userMessage: CoachMessage = {
       id: createId('msg'),
       role: 'user',
@@ -52,7 +63,10 @@ export function ChatScreen({
       const response = await mutateAsync({
         messages: nextMessages.map((message) => ({
           role: message.role,
-          content: message.content,
+          content:
+            message.id === userMessage.id
+              ? withStudyTopicContext(message.content, studyTopic, isFirstMessage)
+              : message.content,
         })),
       });
 
@@ -83,7 +97,11 @@ export function ChatScreen({
     <ScreenLayout title={title} subtitle={subtitle} footer={footer} showBack={showBack}>
       {messages.length === 0 ? (
         <Card>
-          <Text variant="body">Envie uma mensagem para começar.</Text>
+          <Text variant="body">
+            {studyTopic
+              ? `Pergunte sobre ${studyTopic} ou envie a mensagem sugerida abaixo.`
+              : 'Envie uma mensagem para começar.'}
+          </Text>
         </Card>
       ) : (
         messages.map((message) => (

@@ -10,7 +10,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { Text } from '@ds/components/Text';
 import { colors } from '@ds/tokens/colors';
 import { spacing } from '@ds/tokens/spacing';
 
@@ -42,25 +41,20 @@ export function ThinkingIndicator() {
 
   return (
     <View style={styles.container}>
-      <Text variant="caption">Thinking...</Text>
-      <View style={styles.dots}>
-        <Animated.View style={[styles.dot, style1]} />
-        <Animated.View style={[styles.dot, style2]} />
-        <Animated.View style={[styles.dot, style3]} />
-      </View>
+      <Animated.View style={[styles.dot, style1]} />
+      <Animated.View style={[styles.dot, style2]} />
+      <Animated.View style={[styles.dot, style3]} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: spacing.sm,
     paddingVertical: spacing.lg,
-  },
-  dots: {
-    flexDirection: 'row',
-    gap: spacing.sm,
   },
   dot: {
     width: 8,

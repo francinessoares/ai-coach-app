@@ -21,6 +21,20 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
+          name="study-focus"
+          options={{
+            gestureEnabled: true,
+            animation: 'slide_from_right',
+          }}
+        />
+        <Stack.Screen
+          name="study-questions"
+          options={{
+            gestureEnabled: true,
+            animation: 'slide_from_right',
+          }}
+        />
+        <Stack.Screen
           name="study-session"
           options={{
             gestureEnabled: true,

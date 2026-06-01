@@ -30,8 +30,14 @@ export function ScreenLayout({
       <View style={styles.container}>
         <View style={styles.header}>
           {showBack ? <BackButton onPress={onBack} /> : null}
-          <Text variant="title">{title}</Text>
-          {subtitle ? <Text variant="caption">{subtitle}</Text> : null}
+          <Text variant="title" style={styles.title}>
+            {title}
+          </Text>
+          {subtitle ? (
+            <Text variant="caption" style={styles.subtitle}>
+              {subtitle}
+            </Text>
+          ) : null}
         </View>
 
         <ScrollView
@@ -65,13 +71,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.borderSubtle,
   },
+  title: {
+    flexShrink: 1,
+  },
+  subtitle: {
+    flexShrink: 1,
+  },
   middle: {
     flex: 1,
   },
   middleContent: {
     padding: spacing.md,
-    gap: spacing.md,
     paddingBottom: spacing.xl,
+    flexGrow: 1,
+    gap: spacing.md,
   },
   footer: {
     padding: spacing.md,

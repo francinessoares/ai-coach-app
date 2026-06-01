@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@ds/components/Button';
@@ -10,21 +9,36 @@ import { spacing } from '@ds/tokens/spacing';
 
 import { ScreenLayout } from '@/components/layout/screen-layout';
 import { TopicChip } from '@/components/ui/topic-chip';
-import { currentStudy, studyTopics, type StudyTopic } from '@/config/study';
+import { currentStudy, studyTopics } from '@/config/study';
+
+function openStudyFocus(router: ReturnType<typeof useRouter>, topic: string) {
+  router.push({
+    pathname: '/study-focus',
+    params: { topic },
+  });
+}
+
+function openStudySession(
+  router: ReturnType<typeof useRouter>,
+  params: { topic: string; focus?: string; day?: string },
+) {
+  router.push({
+    pathname: '/study-session',
+    params,
+  });
+}
 
 export function StudyScreen() {
   const router = useRouter();
-  const [selectedTopic, setSelectedTopic] = useState<StudyTopic>(currentStudy.topic);
 
   return (
-    <ScreenLayout title="Estudo" subtitle="Escolha um tema">
+    <ScreenLayout title="Estudo" subtitle="Escolha um tema para estudar com o coach">
       <View style={styles.grid}>
         {studyTopics.map((topic) => (
           <TopicChip
             key={topic}
             label={topic}
-            selected={selectedTopic === topic}
-            onPress={() => setSelectedTopic(topic)}
+            onPress={() => openStudyFocus(router, topic)}
           />
         ))}
       </View>
@@ -33,9 +47,9 @@ export function StudyScreen() {
         label="Continuar estudo atual"
         variant="secondary"
         onPress={() =>
-          router.push({
-            pathname: '/study-session',
-            params: { topic: currentStudy.title, day: String(currentStudy.day) },
+          openStudySession(router, {
+            topic: currentStudy.title,
+            day: String(currentStudy.day),
           })
         }
       />
